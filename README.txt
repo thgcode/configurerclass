@@ -1,14 +1,10 @@
 Configurer class
 
 This class is intended to be a mixin to your classes.
-It has, at the moment, only one function.
+It reads and writes configuration files based on attributes of a class.
+See the api.txt file to see more details of its usage.
 
-load(file, section, ints, strings, booleans)
-This function, when called, will set all configuration options written
-in the file to your class (see the included example).
-Ints, strings and booleans are lists of strings, each element containing option
-names. These lists will convert the variables to the proper types when
-setting the class attributes.
+If you want to look right away to the code, there is an example and the
+module itself.
 
-I'll later write a save function so you'll be hable to save a
-dictionary in the configuration file.
+Contributions are very appreciated.

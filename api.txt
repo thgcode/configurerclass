@@ -1,0 +1,12 @@
+List of functions in the class
+
+load(file, section, ints, strings, booleans)
+This function, when called, will set all configuration options written
+in the file to your class (see the included example).
+Ints, strings and booleans are lists of strings, each element containing option
+names. These lists will convert the variables to the proper types when
+setting the class attributes.
+
+save(cfgfile, section, ints, strings, booleans)
+This function will get all the attributes of the class and save them to
+the configuration file.
