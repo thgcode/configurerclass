@@ -12,8 +12,12 @@ class Player(Configurer):
         for o in self.objects:
             print o
 
+    def save_data(self):
+        return self.save("another.ini", "player", P_INTS, P_STRINGS, P_BOOLEANS)
+
 P_INTS = ["level"]
 P_STRINGS = ["name"]
 P_BOOLEANS = ["died"]
 p = Player()
 p.print_stats()
+p.save_data()

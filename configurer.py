@@ -23,3 +23,13 @@ class Configurer(object):
             else:
                 unknown_items[item] = val
         return unknown_items
+
+    def save(self, cfgfile, section, ints, strings, booleans):
+        c=ConfigParser.ConfigParser()
+        c.add_section(section)
+        options = [] + ints + strings + booleans
+        for o in options:
+            val = getattr(self, o)
+            c.set(section, o, val)
+        f = open(cfgfile, "w")
+        return c.write(f)
