@@ -1,38 +1,39 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 try:
-    from configparser import ConfigParser, NoOptionError
+    from configparser import ConfigParser
 except ImportError:
-    from ConfigParser import ConfigParser, NoOptionError
+    from ConfigParser import ConfigParser
 class Configurer(object):
-    def load(self, cfgfile, section, ints, strings, booleans=[]):
+    _BOOLEAN_STATES = {'yes': True, 'true': True, 'on': True,
+        'no': False, 'false': False, 'off': False}
+
+    def _detect_type_and_convert(self, value):
+        v = value.lower()
+        if value.isdigit():
+            return int(value)
+        elif v in ("true", "false", "yes", "no", "on", "off"):
+            return self._BOOLEAN_STATES[v]
+        else:
+            return value
+
+    def load(self, cfgfile, section=None):
+        if not section:
+            section = type(self).__name__ # Make the name of the class be the section name
         c = ConfigParser()
         c.read(cfgfile)
-        toparse = [] + ints + strings + booleans
-        for o in toparse:
-            try:
-                if o in ints:
-                    val = c.getint(section, o)
-                elif o in strings:
-                    val = c.get(section, o)
-                elif o in booleans:
-                    val = c.getboolean(section, o)
-                setattr(self, o, val)
-            except NoOptionError:
-                if not hasattr(self, o):
-                    raise ValueError("Missing option in the configuration file: %s" % o)
-        unknown_items = {}
+        items = {}
         for item, val in c.items(section):
-            if item in toparse:
-                continue
-            else:
-                unknown_items[item] = val
-        return unknown_items
+            d = self._detect_type_and_convert(val)
+            setattr(self, item, d)
+            items[item] = d
+        return items
 
-    def save(self, cfgfile, section, ints, strings, booleans):
+    def save(self, cfgfile, options, section=None):
+        if not section:
+            section = type(self).__name__ # Make the name of the class be the section name
         c = ConfigParser()
         c.add_section(section)
-        options = [] + ints + strings + booleans
         for o in options:
             val = getattr(self, o)
             c.set(section, o, str(val))
