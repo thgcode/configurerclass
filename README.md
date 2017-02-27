@@ -7,31 +7,32 @@ an INI file and your classes.
 #### List of functions in the class
 
 
-### load(file,section=None)
+### load(cfgfile, section=None)
 
-> This function, when called, will set all configuration options written
-in the file to your class (see the ```example.py```).
+> This function, when called, will set all configuration options provided in
+the configuration file to your class (see the ```example.py```).
 
-The attributes are converted to its correct type automatically.
+The attributes are converted to their correct types automatically.
 
 > Only integers, strings and booleans are supported for now).
 
-**file**: File that contains configuration about the class.
+**cfgfile**: file that contains the class' configuration options.
 
-**section** : is the section to look up the attributes on the configuration
+**section**: the section to look up the options on the configuration
 file.
 
 > If section is None it will default to the name of the class.
 
 ### save(cfgfile, options, section=None)
 
-> This function will get all attributes described in the options list of the class and save them to the configuration file.
+> This function will get all attributes described in the options list and save them to the configuration file.
 
-**cfgfile**: Origin from file that will be written with data within class.
+**cfgfile**: file that will be written with data within class.
 
-**options**: Attributes from origin class( new attributes that should can created)
+**options**: attributes from origin class (attributes that should be created
+in the configuration file).
 
-**section:** Is the section to look up the attributes on the configuration
+**section**: the section to set the attributes on the configuration
 file.
 
 > If section is None it will default to the name of the class.
